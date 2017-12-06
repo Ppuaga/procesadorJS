@@ -5,15 +5,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-
-import org.omg.PortableServer.IdAssignmentPolicy;
-
-import com.sun.xml.internal.messaging.saaj.packaging.mime.internet.HeaderTokenizer.Token;
+import java.io.IOException;
 
 import error.*;
-import javafx.scene.transform.Rotate;
-import jdk.management.resource.internal.TotalResourceContext;
-import sintactico.Sintactico;
+import sintactico.*;
 import tabla_simbolos.*;
 import token.*;
 
@@ -134,7 +129,7 @@ public class Lexico {
 				toReturn = new Token("ASIGDIV",null);//genera token ASIGDIV
 			} else if (cadena.equals("\r")) {
 				toReturn = new Token("CR",null);//genera token CR
-				procS(contenido);
+				procS(contenido,tS);
 			}
 		} else if (isLetter(contenido[indice])) {
 			cadena = Character.toString(contenido[indice]);//Devuelve un objeto String del caracter
@@ -279,19 +274,23 @@ public class Lexico {
 	}
 
 	public static Long getDigit() {
-		return digit; 
-	}
-
-	public char[] getA() {
-		return a;
+		return digit;
 	}
 
 	public static String getCadena() {
-		return cadena; 
+		return cadena;
 	}
 
 	public File getArchivo() {
 		return archivo;
+	}
+
+	public FileReader getFr() {
+		return fr;
+	}
+
+	public char[] getA() {
+		return a;
 	}
 
 	public BufferedWriter getBw() {
@@ -305,9 +304,9 @@ public class Lexico {
 	public Token al(TablaSimbolos tabla_simbolos) throws ComentarioException, CadenaException, OpLogicoException, OtroSimboloException, FueraDeRangoException, IdException, IOException, DeclaracionIncompatibleException {
 		Token toReturn = null;
 		while (toReturn == null) {
-			toReturn = this.procS(this.getA(), tablaSimbolos);
+			toReturn = this.procS(this.getA(), tabla_simbolos);
 		}
-		if ("CR".equals(toReturn.getValue())!=true) {//comprobamos que el token a devolver no sea CR
+		if ("CR".equals(toReturn.getValor())!=true) {//comprobamos que el token a devolver no sea CR
 			this.bw.write(toReturn.toString());
 			this.bw.newLine();
 		}
