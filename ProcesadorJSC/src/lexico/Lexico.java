@@ -1,12 +1,9 @@
 package lexico;
 
 //Paquetes externos
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
+//Paquetes internos;
 import error.*;
 import sintactico.*;
 import tabla_simbolos.*;
@@ -18,8 +15,8 @@ public class Lexico {
 	private FileReader fr = null;
 	private char[] a;
 	private BufferedWriter bw;
-	public static Integer linea = 0;//Para recorrer las lineas
-	public static int indice = 0;//Para recorrer el array
+	public static Integer linea = 0;    //Para recorrer las lineas
+	public static int indice = 0;       //Para recorrer el array
 	public static Long digit = (long) 0;//Para detectar digitos
 	public static String cadena = "";
 
@@ -36,7 +33,7 @@ public class Lexico {
 			this.a = new char [(int) archivo.length()];//Este Array nos almacena los caracteres
 			this.fr.read(a); //añade el contenido al array
 
-			String ruta = Sintactico.miDir.getCanonicalPath()+"\\tokens.txt";
+			String ruta = Sintactico.miDir.getCanonicalPath()+"//impreso//tokens.txt";
 
 			File archivoTokens = new File(ruta);
 			this.bw = new BufferedWriter(new FileWriter(archivoTokens));//leemos el fichero
@@ -306,9 +303,11 @@ public class Lexico {
 		while (toReturn == null) {
 			toReturn = this.procS(this.getA(), tabla_simbolos);
 		}
-		if ("CR".equals(toReturn.getValor())!=true) {//comprobamos que el token a devolver no sea CR
-			this.bw.write(toReturn.toString());
-			this.bw.newLine();
+                
+		if ("CR".equals(toReturn.getId()) != true) {//comprobamos que el token a devolver no sea CR
+                    System.out.println(toReturn.toString());
+                    this.bw.write(toReturn.toString());
+                    this.bw.newLine();
 		}
 		return toReturn;
 	}

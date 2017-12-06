@@ -49,9 +49,9 @@ public class Sintactico {
     this.tabla = 0;
 
     //Nuevos archivos
-    File archivoTablas = new File(miDir + "\\tablas.txt");
-    File archivoParse = new File(miDir + "\\parse.txt");
-    File archivoError = new File(miDir + "\\error.txt");
+    File archivoTablas = new File(miDir + "//impreso//tablas.txt");
+    File archivoParse = new File(miDir + "//impreso//parse.txt");
+    File archivoError = new File(miDir + "//impreso//error.txt");
 
     try {
       this.tablasWriter = new BufferedWriter(new FileWriter(archivoTablas));
@@ -315,7 +315,7 @@ public class Sintactico {
       procedZ1();
     }
     else {
-      throw new FirstNoCoincideException("Error en linea: " + Integer.toString(Lexico.linea) + " Se esperaba detectar el token < CR , _ > pero se ha detectado: " + this.getTokenDevuelto().toString());
+      throw new FirstNoCoincideException("ProcedZ():Error en linea: " + Integer.toString(Lexico.linea) + " Se esperaba detectar el token < CR , _ > pero se ha detectado: " + this.getTokenDevuelto().toString());
     }
 
   }
@@ -437,7 +437,7 @@ public class Sintactico {
       empareja(new Token("PUNTOYCOMA", null));      
     }
     else {
-      throw new FirstNoCoincideException("Error en linea: " + Integer.toString(Lexico.linea) + " Se esperaba detectar el token < CR , _ > pero se ha detectado: " + this.getTokenDevuelto().toString());
+      throw new FirstNoCoincideException("ProcedD1:Error en linea: " + Integer.toString(Lexico.linea) + " Se esperaba detectar el token < CR , _ > pero se ha detectado: " + this.getTokenDevuelto().toString());
     }
 
   }
@@ -462,7 +462,7 @@ public class Sintactico {
       procedS();
     }
     else {
-      throw new FirstNoCoincideException("Error en linea: " + Integer.toString(Lexico.linea) + " Se esperaba detectar el token < CR , _ > pero se ha detectado: " + this.getTokenDevuelto().toString());
+      throw new FirstNoCoincideException("ProcedG:Error en linea: " + Integer.toString(Lexico.linea) + " Se esperaba detectar el token < CR , _ > pero se ha detectado: " + this.getTokenDevuelto().toString());
     }
 
   }
@@ -507,7 +507,7 @@ public class Sintactico {
       procedSfun();
     }
     else {
-      throw new FirstNoCoincideException("Error en linea: " + Integer.toString(Lexico.linea) + " Se esperaba detectar el token < CR , _ > pero se ha detectado: " + this.getTokenDevuelto().toString());
+      throw new FirstNoCoincideException("ProcedG2:Error en linea: " + Integer.toString(Lexico.linea) + " Se esperaba detectar el token < CR , _ > pero se ha detectado: " + this.getTokenDevuelto().toString());
     }
 
   }
@@ -601,7 +601,7 @@ public class Sintactico {
           empareja(new Token("PUNTOYCOMA", null));
       }
       else {
-        throw new FirstNoCoincideException("Error en linea: " + Integer.toString(Lexico.linea) + " Se esperaba detectar el token < CR , _ > pero se ha detectado: " + this.getTokenDevuelto().toString());
+        throw new FirstNoCoincideException("ProcedX:Error en linea: " + Integer.toString(Lexico.linea) + " Se esperaba detectar el token < CR , _ > pero se ha detectado: " + this.getTokenDevuelto().toString());
       }
 
   }
@@ -1069,6 +1069,7 @@ public class Sintactico {
       this.errorWriter = errorWriter;
   }
 
+  //Metodo main
   public static void main(String[] args) {
    
     Sintactico as = null;
@@ -1076,7 +1077,7 @@ public class Sintactico {
     try {
         File ficheroAAnalizar=null;
         if (args != null) {
-            ficheroAAnalizar = new File(miDir.getCanonicalPath() + "\\" + args[0]);
+            ficheroAAnalizar = new File(miDir.getCanonicalPath() + "//pruebas//" + args[0]);
         }
         as = new Sintactico();
         if (args.length != 1) {
@@ -1108,8 +1109,10 @@ public class Sintactico {
         } catch (IOException exc) {
             System.out.println("Error escribiendo en el fichero de error.");
         }
-
-    } catch (IOException ex) {
+        
+    }
+    //Error en la escritura/tratamiento de los ficheros generados
+    catch (IOException ex) {
         System.out.println("Error con la escritura o tratamiento de alguno de los ficheros generados.");
         try {
             if (as != null) {
@@ -1119,7 +1122,9 @@ public class Sintactico {
         } catch (IOException exc) {
             System.out.println("Error escribiendo en el fichero de error.");
         }
-    } catch (Exception ex) {
+    }
+    //Excepcion no controlada
+    catch (Exception ex) {
         System.out.println("Excepcion no controlada.");
         try {
             if (as != null) {
